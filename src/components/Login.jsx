@@ -71,12 +71,12 @@ function Login() {
             onChange={handleChange}
             required
           />
-          <img
-            src={showPassword ? eyeOpen : eyeClosed}
-            alt="Toggle visibility"
-            className="toggle-eye"
-            onClick={() => setShowPassword(!showPassword)}
-          />
+          <span className="toggle-eye" onClick={() => setShowPassword(!showPassword)}>
+            <img
+              src={showPassword ? eyeOpen : eyeClosed}
+              alt="Toggle visibility"
+            />
+          </span>
         </div>
 
         <div className="form-options">
