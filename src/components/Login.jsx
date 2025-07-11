@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Custom CSS
+import { useNavigate, Link } from 'react-router-dom'; // <-- Added Link
+import './Login.css';
 import eyeOpen from '../assets/eye-open.png';
 import eyeClosed from '../assets/eye-closed.png';
 
@@ -83,7 +83,7 @@ function Login() {
           <label>
             <input type="checkbox" /> Remember me
           </label>
-          <a href="#">Forgot password?</a>
+          <Link to="/forgot-password">Forgot password?</Link> {/* <-- Updated */}
         </div>
 
         <button type="submit" className="btn">Sign In</button>
