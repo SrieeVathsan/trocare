@@ -9,6 +9,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .login-form {
@@ -16,8 +18,11 @@ body {
   padding: 40px 30px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  width: 350px;
+  width: 90%;
+  max-width: 400px;
+  min-width: 320px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .login-icon {
@@ -129,11 +134,13 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   gap: 4px;
+  margin: 0;
 }
 
 .form-options a {
   color: #7c3aed;
   text-decoration: underline;
+  margin-left: auto;
 }
 
 .btn {
@@ -167,4 +174,57 @@ input[type="password"]:focus {
   color: #ffb4b4;
   font-size: 13px;
   margin-bottom: 10px;
+}
+
+/* ✅ Responsive media queries */
+@media (max-width: 480px) {
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .form-options a {
+    margin-right: 0;
+  }
+
+  .login-form h2 {
+    font-size: 20px;
+  }
+
+  .login-form p {
+    font-size: 13px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  .password-wrapper input {
+    font-size: 13px;
+  }
+
+  label {
+    font-size: 13px;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-eye {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-form {
+    max-width: 420px;
+    padding: 40px 28px;
+  }
 }
