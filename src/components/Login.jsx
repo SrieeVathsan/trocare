@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // <-- Added Link
+import { useNavigate, Link } from 'react-router-dom';
+import userData from '../data/userLoginData.json'; // ✅ mock data
 import './Login.css';
 import eyeOpen from '../assets/eye-open.png';
 import eyeClosed from '../assets/eye-closed.png';
@@ -14,35 +15,29 @@ function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     setError('');
 
-    if (!form.email || !form.password) {
+    const { email, password } = form;
+
+    if (!email || !password) {
       setError('Please enter both email and password.');
       return;
     }
 
-    try {
-      const res = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      if (res.ok) {
-        navigate('/upload');
-      } else {
-        setError('Invalid email or password');
-      }
-    } catch (err) {
-      setError('Something went wrong. Please try again.');
+    // ✅ Compare with mock data from JSON
+    if (email === userData.email && password === userData.password) {
+      document.cookie = 'jwt=mockToken123; path=/'; // Simulate auth token
+      navigate('/dashboard');
+    } else {
+      setError('Invalid email or password');
     }
   };
 
   return (
     <div className="login-container">
-      <form className="login-form" onSubmit={handleLogin}>
+      <form className="login-form" onSubmit={handleLogin} noValidate>
         <div className="login-icon">
           <img src={require('../assets/login-icon.png')} alt="Login Icon" />
         </div>
@@ -51,8 +46,9 @@ function Login() {
 
         {error && <p className="error-msg">{error}</p>}
 
-        <label>Email Address</label>
+        <label htmlFor="email">Email Address</label>
         <input
+          id="email"
           type="email"
           name="email"
           placeholder="you@example.com"
@@ -61,9 +57,10 @@ function Login() {
           required
         />
 
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <div className="password-wrapper">
           <input
+            id="password"
             type={showPassword ? 'text' : 'password'}
             name="password"
             placeholder="Enter password"
@@ -74,22 +71,22 @@ function Login() {
           <span className="toggle-eye" onClick={() => setShowPassword(!showPassword)}>
             <img
               src={showPassword ? eyeOpen : eyeClosed}
-              alt="Toggle visibility"
+              alt={showPassword ? 'Hide password' : 'Show password'}
             />
           </span>
         </div>
 
         <div className="form-options">
-          <label>
+          <label className="remember-me">
             <input type="checkbox" /> Remember me
           </label>
-          <Link to="/forgot-password">Forgot password?</Link> {/* <-- Updated */}
+          <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
         </div>
 
         <button type="submit" className="btn">Sign In</button>
 
         <p className="signup-text">
-          Don't have an account? <a href="/register">Sign up</a>
+          Don't have an account? <Link to="/register">Sign up</Link>
         </p>
       </form>
     </div>
